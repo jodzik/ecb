@@ -18,6 +18,7 @@
 | 0     | RESET                         | Any write perform reset device |
 | 1     | INFO                          | Read will be return information aboud currently executing program |
 | 2     | BOARD_NAME                    | Read board name |
+| 3     | SAVE                          | Save all settings changes |
 | 15    | PICK                          | For notify or check established connection |
 | 16    | BOOT BEGIN                    | Initialize firmware upload (bootloaders only) |
 | 17    | BOOT END                      | Terminate firmare upload (bootloaders only) |
