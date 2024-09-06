@@ -1,0 +1,663 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 YaBrowser/24.7.0.0 Safari/537.36" version="24.7.10">
+  <diagram name="Страница — 1" id="G5xMpVedBudW1NXz9saB">
+    <mxGraphModel dx="1434" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="3300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-1" value="7 Marker bit" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="70" y="90" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-3" value="6 DATA" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="150" y="90" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-8" value="1 DATA" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="550" y="90" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-9" value="5 DATA" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="230" y="90" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-10" value="2 DATA" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="470" y="90" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-11" value="0 DATA" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="630" y="90" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-12" value="3 DATA" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="390" y="90" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-13" value="4 DATA" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="310" y="90" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-15" value="BEGIN BYTE 0xD4" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="70" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-16" value="FRAME DATA MAIN" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="190" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-17" value="FRAME DATA ADD" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="310" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-18" value="END BYTE 0x81" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="430" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-21" value="0x01" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="125" y="300" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-22" value="0x82" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="175" y="300" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-23" value="0x03" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="225" y="300" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-24" target="vGvbFsvd_W--5yUfEl1i-29" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-48" value="FRAMING" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="vGvbFsvd_W--5yUfEl1i-47" vertex="1" connectable="0">
+          <mxGeometry x="-0.0286" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-24" value="0x84" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="275" y="300" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-38" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-25" target="vGvbFsvd_W--5yUfEl1i-35" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-25" value="0x01" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="125" y="401" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-41" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-26" target="vGvbFsvd_W--5yUfEl1i-35" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-26" value="0x02" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="175" y="401" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-42" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.688;entryY=-0.052;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-27" target="vGvbFsvd_W--5yUfEl1i-35" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="215" y="511" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-27" value="0x03" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="225" y="401" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-43" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.833;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-28" target="vGvbFsvd_W--5yUfEl1i-35" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-28" value="0x04" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="275" y="401" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-29" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="511" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-29" value="0xD4" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="75" y="401" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-30" target="vGvbFsvd_W--5yUfEl1i-36" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-30" value="0x81" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="375" y="401" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-45" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-31" target="vGvbFsvd_W--5yUfEl1i-44" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-31" value="0x0A" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="325" y="401" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-34" value="BEGIN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="70" y="511" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-35" value="FRAME DATA MAIN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="175" y="511" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-36" value="END" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="370" y="511" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-44" value="FRAME DATA ADD" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="305" y="511" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-49" target="vGvbFsvd_W--5yUfEl1i-50" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-49" value="Полезные данные" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-50" target="vGvbFsvd_W--5yUfEl1i-51" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-50" value="Пакет" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="215" y="670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-51" target="vGvbFsvd_W--5yUfEl1i-55" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-58" value="Передача" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="vGvbFsvd_W--5yUfEl1i-56" vertex="1" connectable="0">
+          <mxGeometry x="-0.0371" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-51" value="Фрейм" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="365" y="670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-55" target="vGvbFsvd_W--5yUfEl1i-63" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-55" value="Фрейм" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="585" y="670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-59" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="490" y="810" as="sourcePoint" />
+            <mxPoint x="490" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-60" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="580" y="810" as="sourcePoint" />
+            <mxPoint x="580" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-61" value="Отправитель" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="410" y="590" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-62" value="Принимающий" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="600" y="590" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="vGvbFsvd_W--5yUfEl1i-63" target="vGvbFsvd_W--5yUfEl1i-64" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-63" value="Пакет" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="740" y="670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-64" value="Полезные данные" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="900" y="670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-67" value="NFILL (1 BYTE)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="890" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-68" value="ADDR (1 BYTE)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="80" y="890" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-69" value="PD (1 BYTE)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="890" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-70" value="FILLER (0..7 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="680" y="890" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-71" value="DATA (0..3565 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="560" y="890" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-72" value="SIGNAL (2 BYTE, U16)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="890" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-73" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="800" y="890" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-74" value="[7..6]&lt;div&gt;NOT USED (2 BITS)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="80" y="988" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-75" value="PD:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="5" y="1003" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-76" value="&lt;div&gt;[5]&lt;/div&gt;IS_ENC (1 BIT)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="988" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-77" value="&lt;div&gt;[4]&lt;/div&gt;DIR (1 BIT)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="988" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-78" value="&lt;div&gt;[3..0]&lt;/div&gt;TYPE (4 BITS)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="988" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-80" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="1210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-81" value="PD (1 BYTE)&lt;div&gt;0x10&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="1210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-83" value="DATA (0..3565 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="1210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-84" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="1210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-85" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="665" y="1210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-86" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1225" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-87" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1310" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-88" value="WRITE_WITHOUT_ENCRYPTION:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1160" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-93" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="1295" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-94" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="1295" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-95" value="PD (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="1295" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-97" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="1295" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-98" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="1295" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-99" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="1460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-100" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="1460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-101" value="PD (1 BYTE)&lt;div&gt;0x11&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="1460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-103" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="1460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-104" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="1460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-105" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1475" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-106" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1560" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-107" value="READ_WITHOUT_ENCRYPTION:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1410" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-108" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="1545" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-109" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="1545" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-110" value="PD (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="1545" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-111" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="1545" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-112" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="665" y="1545" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-113" value="DATA (0..3565 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="1545" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-114" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="1700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-115" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="1700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-116" value="PD (1 BYTE)&lt;div&gt;0x13&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="1700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-117" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x40&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="1700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-118" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="1700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-119" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1715" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-120" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1800" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-121" value="STREAM_OPEN:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1650" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-122" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="1785" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-123" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="1785" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-124" value="PD (1 BYTE)&lt;div&gt;0x03&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="1785" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-125" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x40&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="1785" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-126" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="1785" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-128" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1955" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-129" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="1940" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-130" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="1940" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-131" value="PD (1 BYTE)&lt;div&gt;0x05&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="1940" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-132" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x40&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="1940" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-133" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="665" y="1940" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-140" value="STREAM_DATA_WITHOUT_ENCRYPTION:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="1880" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-141" value="DATA (0..3565 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="1940" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-142" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="2080" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-143" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="2080" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-144" value="PD (1 BYTE)&lt;div&gt;0x14&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="2080" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-145" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="2080" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-146" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="2080" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-147" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="2095" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-148" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="2180" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-149" value="STREAM_CLOSE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="5" y="2030" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-150" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="2165" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-151" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="2165" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-152" value="PD (1 BYTE)&lt;div&gt;0x14&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="2165" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-153" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="2165" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-154" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="2165" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-155" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="2310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-156" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="2310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-157" value="PD (1 BYTE)&lt;div&gt;0x16&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="2310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-158" value="SIGNAL (2 BYTE, U16)&lt;div&gt;NOT_USED&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="2310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-159" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="2310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-160" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="2325" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-161" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="2410" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-162" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="2395" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-163" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="2395" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-164" value="PD (1 BYTE)&lt;div&gt;0x06&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="2395" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-165" value="SIGNAL (2 BYTE, U16)&lt;div&gt;NOT_USED&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="2395" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-166" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="725" y="2395" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-167" value="ENC_OPEN:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="5" y="2270" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-169" value="ENCRYPTED_SESSION_KEY (16 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="2395" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-171" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="2540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-172" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="2540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-173" value="PD (1 BYTE)&lt;div&gt;0x11&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="2540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-174" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x41&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="2540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-175" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="2540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-176" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="2555" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-177" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="2640" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-178" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="2625" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-179" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="2625" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-180" value="PD (1 BYTE)&lt;div&gt;0x0F&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="2625" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-181" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x41&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="2625" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-182" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="845" y="2625" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-183" value="ERR_READ:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="5" y="2500" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-184" value="ERROR DESCRIPTION STRING (0..3564 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="665" y="2625" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-199" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="3010" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-200" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="3010" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-201" value="PD (1 BYTE)&lt;div&gt;0x31&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="3010" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-202" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="3010" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-203" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="3010" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-204" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="3025" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-205" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="3110" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-206" value="READ_WITH_ENCRYPTION:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="5" y="2960" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-207" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="3095" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-208" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="3095" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-209" value="PD (1 BYTE)&lt;div&gt;0x21&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="3095" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-210" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="3095" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-211" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="665" y="3095" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-212" value="DATA (8 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="3095" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-213" value="NFILL (1 BYTE)&lt;div&gt;0x05&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="2775" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-214" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="2775" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-215" value="PD (1 BYTE)&lt;div&gt;0x30&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="2775" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-216" value="DATA (11 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="2775" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-217" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="2775" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-218" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="785" y="2775" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-219" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="2790" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-220" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry y="2875" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-221" value="WRITE_WITH_ENCRYPTION:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="5" y="2725" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-222" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="2860" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-223" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="65" y="2860" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-224" value="PD (1 BYTE)&lt;div&gt;0x20&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="185" y="2860" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-225" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="305" y="2860" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vGvbFsvd_W--5yUfEl1i-226" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="2860" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YueZDsbkiNYmt8YLDUAh-1" value="ERROR CODE&lt;div&gt;(1 BYTE)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="545" y="2625" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YueZDsbkiNYmt8YLDUAh-2" value="FILLER (5 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="665" y="2775" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YueZDsbkiNYmt8YLDUAh-3" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="425" y="1210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-1" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="425" y="3240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-2" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="3240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-3" value="PD (1 BYTE)&lt;div&gt;0x17&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="185" y="3240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-5" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="305" y="3240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-6" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="3240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-7" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry y="3255" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-8" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry y="3340" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-9" value="WRITE_WITH_ENCRYPTION_AND_AUTH:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="5" y="3190" width="245" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-10" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="425" y="3325" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-11" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="3325" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-12" value="PD (1 BYTE)&lt;div&gt;0x07&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="185" y="3325" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-13" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="305" y="3325" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-14" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="665" y="3325" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-16" value="RANDOM U64&lt;div&gt;(8 BYTES)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="3325" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-17" value="NFILL (1 BYTE)&lt;div&gt;0x05&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="425" y="3410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-18" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="3410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-19" value="PD (1 BYTE)&lt;div&gt;0x38&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="185" y="3410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-20" value="DATA (11 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="665" y="3410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-21" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="305" y="3410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-22" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="905" y="3410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-23" value="MASTER:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry y="3425" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-24" value="SLAVE:" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry y="3510" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-26" value="NFILL (1 BYTE)&lt;div&gt;0x00&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="425" y="3495" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-27" value="ADDR (1 BYTE)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="3495" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-28" value="PD (1 BYTE)&lt;div&gt;0x28&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="185" y="3495" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-29" value="SIGNAL (2 BYTE, U16)&lt;div&gt;0x01&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="305" y="3495" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-30" value="CRC32 (4 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="3495" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-31" value="FILLER (5 BYTES)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="785" y="3410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sNbMwaJiOVbaqZrjBbyq-32" value="ENCRYPTED RANDOM U64&lt;div&gt;(8 BYTES)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="3410" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
