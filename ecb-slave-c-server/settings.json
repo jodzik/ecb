@@ -1,0 +1,72 @@
+{
+    "address": 1,
+    "auth_key": [1, 42, 203, 69, 3, 143, 101, 8, 3, 56, 255, 251, 2, 199, 70, 147],
+    "signals": [
+        {
+            "index": 1,
+            "name": "info",
+            "mode": "rn",
+            "data": [1, 20, 86, 73, 82, 84, 85, 65, 76, 45, 83, 76, 65, 86, 69, 45, 68, 69, 86, 73, 67, 69, 2, 3, 0, 1, 0, 3, 7, 86, 83, 68, 48, 48, 48, 48]
+        },
+        {
+            "index": 2,
+            "name": "pick",
+            "mode": "wn"
+        },
+        {
+            "index": 32,
+            "name": "write-enc-test",
+            "mode": "we"
+        },
+        {
+            "index": 33,
+            "name": "write-auth-test",
+            "mode": "wa"
+        },
+        {
+            "index": 34,
+            "name": "read-enc-test",
+            "mode": "re",
+            "data": "READ-ENC-TEST-DATA"
+        },
+        {
+            "index": 35,
+            "name": "read-auth-test",
+            "mode": "ra",
+            "data": "READ-AUTH-TEST-DATA"
+        },
+        {
+            "index": 36,
+            "name": "read-write-enc-test",
+            "mode": "rwe",
+            "data": "READ-WRITE-ENC-TEST-DATA"
+        },
+        {
+            "index": 37,
+            "name": "read-write-auth-test",
+            "mode": "rwa",
+            "data": "READ-WRITE-AUTH-TEST-DATA"
+        },
+        {
+            "index": 38,
+            "name": "stream-test",
+            "mode": "rn",
+            "data": "STREAM-TEST-DATA",
+            "stream_pub_period_ms": 255
+        },
+        {
+            "index": 39,
+            "name": "stream-enc-test",
+            "mode": "re",
+            "data": "STREAM-ENC-TEST-DATA",
+            "stream_pub_period_ms": 255
+        },
+        {
+            "index": 40,
+            "name": "bad-stream-test",
+            "mode": "wn",
+            "data": "BAD-STREAM-TEST-DATA",
+            "stream_pub_period_ms": 255
+        }
+    ]
+}

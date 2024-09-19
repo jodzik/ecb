@@ -1,0 +1,12 @@
+D:\nokey\ecb\ecb-slave-c-server\main.cpp;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\main.obj
+D:\nokey\ecb\ecb-slave-c-server\crc32.c;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\crc32.obj
+D:\nokey\ecb\ecb-slave-c-server\ecb-slave.c;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\ecb-slave.obj
+D:\nokey\ecb\ecb-slave-c-server\framer7b.c;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\framer7b.obj
+D:\nokey\ecb\ecb-slave-c-server\raiden.c;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\raiden.obj
+D:\nokey\ecb\ecb-slave-c-server\stdser.c;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\stdser.obj
+D:\nokey\ecb\ecb-slave-c-server\serial\serial.cc;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\serial.obj
+D:\nokey\ecb\ecb-slave-c-server\serial\impl\win.cc;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\win.obj
+D:\nokey\ecb\ecb-slave-c-server\serial\impl\unix.cc;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\unix.obj
+D:\nokey\ecb\ecb-slave-c-server\serial\impl\list_ports\list_ports_win.cc;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\list_ports_win.obj
+D:\nokey\ecb\ecb-slave-c-server\serial\impl\list_ports\list_ports_linux.cc;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\list_ports_linux.obj
+D:\nokey\ecb\ecb-slave-c-server\serial\impl\list_ports\list_ports_osx.cc;D:\nokey\ecb\ecb-slave-c-server\build\ecb-slave-c-server.dir\Debug\list_ports_osx.obj
