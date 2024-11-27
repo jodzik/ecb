@@ -4,6 +4,9 @@
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\safe_c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\crc32.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -16,7 +19,7 @@
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\raiden.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\stdser.c">
+    <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\serdes.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\serial\serial.cc">

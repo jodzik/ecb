@@ -18,6 +18,7 @@
 #include <fstream>
 #include <ctime>
 #include <unordered_map>
+#include <cstdarg>
 
 using namespace std;
 using json = nlohmann::json;
@@ -161,12 +162,24 @@ int sig_write_cb(uint16_t const sig, uint8_t const* const data, uint16_t const n
     return 0;
 }
 
+static void safe_c_printf(char const* const fmt, ...) {
+    va_list arg_list = {0};
+    va_start(arg_list, fmt);
+    vprintf(fmt, arg_list);
+    va_end(arg_list);
+}
+
 int main(int argc, char** argv)
 {
+    safe_c__init(safe_c_printf);
     try {
         struct Ecbs ecbs = {0};
 
-        std::ifstream settings_file("settings.json");
+        std::ifstream settings_file("settings.json", std::ios::in);
+        if (!settings_file.is_open() || !settings_file.good()) {
+            std::system("pwd");
+            throw std::runtime_error("Fail to open settings file.");
+        }
         json const settings = json::parse(settings_file);
         uint8_t const address = settings["address"];
 

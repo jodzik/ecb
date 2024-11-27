@@ -98,11 +98,11 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;SAFE_C_LOG_EN__DBG=1;SAFE_C_LOG_EN__INF=1;SAFE_C_LOG_EN__WRN=1;SAFE_C_LOG_EN__ERR=1;ECBS_DEBUG_EN=1;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;SAFE_C_LOG_EN__DBG=1;SAFE_C_LOG_EN__INF=1;SAFE_C_LOG_EN__WRN=1;SAFE_C_LOG_EN__ERR=1;ECBS_DEBUG_EN=1;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -138,13 +138,13 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SAFE_C_LOG_EN__DBG=1;SAFE_C_LOG_EN__INF=1;SAFE_C_LOG_EN__WRN=1;SAFE_C_LOG_EN__ERR=1;ECBS_DEBUG_EN=1;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SAFE_C_LOG_EN__DBG=1;SAFE_C_LOG_EN__INF=1;SAFE_C_LOG_EN__WRN=1;SAFE_C_LOG_EN__ERR=1;ECBS_DEBUG_EN=1;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -180,13 +180,13 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SAFE_C_LOG_EN__DBG=1;SAFE_C_LOG_EN__INF=1;SAFE_C_LOG_EN__WRN=1;SAFE_C_LOG_EN__ERR=1;ECBS_DEBUG_EN=1;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SAFE_C_LOG_EN__DBG=1;SAFE_C_LOG_EN__INF=1;SAFE_C_LOG_EN__WRN=1;SAFE_C_LOG_EN__ERR=1;ECBS_DEBUG_EN=1;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -223,11 +223,11 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SAFE_C_LOG_EN__DBG=1;SAFE_C_LOG_EN__INF=1;SAFE_C_LOG_EN__WRN=1;SAFE_C_LOG_EN__ERR=1;ECBS_DEBUG_EN=1;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;SAFE_C_LOG_EN__DBG=1;SAFE_C_LOG_EN__INF=1;SAFE_C_LOG_EN__WRN=1;SAFE_C_LOG_EN__ERR=1;ECBS_DEBUG_EN=1;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -310,11 +310,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\main.cpp" />
+    <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\safe_c.c" />
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\crc32.c" />
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\ecb-slave.c" />
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\framer7b.c" />
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\raiden.c" />
-    <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\stdser.c" />
+    <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\serdes.c" />
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\serial\serial.cc" />
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\serial\impl\win.cc" />
     <ClCompile Include="D:\nokey\ecb\ecb-slave-c-server\serial\impl\unix.cc" />

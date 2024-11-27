@@ -6,10 +6,24 @@ extern "C" {
 #endif
 
 #include "framer7b.h"
+#include "safe_c.h"
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+
+// #define ECBS_DEBUG_EN                   1
+
+#if ECBS_DEBUG_EN
+
+#define ECBS_DBG_PRINT(fmt) DBG_LOG(fmt)
+#define ECBS_DBG_PRINTF(fmt, ...) DBG_LOGf(fmt, __VA_ARGS__)
+
+#else
+#define ECBS_DBG_PRINT(fmt) LOG_MOCK(fmt)
+#define ECBS_DBG_PRINTF(fmt, ...) LOG_MOCK(fmt)
+#endif
 
 
 // Settings
@@ -19,24 +33,6 @@ enum {
 };
 
 enum {
-    ECBS__ENC_FILLER = 0x5A,
-
-    ECBS__PD_TYPE_MASK = 0b1111,
-    ECBS__PD_DIR_MASK = 0b10000,
-    ECBS__PD_DIR_IS_REQ = ECBS__PD_DIR_MASK,
-    ECBS__PD_DIR_IS_ANSW = 0x00,
-    ECBS__PD_IS_ENC_MASK = 0b100000,
-    ECBS__PD_TYPE_WRITE = 0b0000,
-    ECBS__PD_TYPE_WRITE_NO_ANSW = 0b0010,
-    ECBS__PD_TYPE_READ = 0b0001,
-    ECBS__PD_TYPE_STREAM_OPEN = 0b0011,
-    ECBS__PD_TYPE_STREAM_CLOSE = 0b0100,
-    ECBS__PD_TYPE_STREAM_DATA = 0b0101,
-    ECBS__PD_TYPE_ENC_OPEN = 0b0110,
-    ECBS__PD_TYPE_WRITE_AUTH_REQ = 0b0111,
-    ECBS__PD_TYPE_WRITE_WITH_AUTH = 0b1000,
-    ECBS__PD_TYPE_ERR = 0b1111,
-
     ECBS__BROADCAST_ADDR = 0x00,
     ECBS__MIN_PACKET_SIZE = 9,
     ECBS__MAX_DATA_SIZE = FRAMER7B__DATA_SIZE - ECBS__MIN_PACKET_SIZE,
@@ -45,16 +41,25 @@ enum {
 enum {
     ECBS_SIG__RESET = 0,
     ECBS_SIG__INFO = 1,
+    ECBS_SIG__ADDR = 2,
     ECBS_SIG__AUTH_KEY = 14,
     ECBS_SIG__PICK = 15,
     
     ECBS_SIG_BOOT__BEGIN = 16,
     ECBS_SIG_BOOT__END = 17,
-    ECBS_SIG_BOOT__CHECKSUM = 18,
     ECBS_SIG_BOOT__FW_KEY = 19,
     ECBS_SIG_BOOT__WRITE = 20,
     ECBS_SIG_BOOT__APP_INFO = 22,
     ECBS_SIG_BOOT__GO_APP = 23,
+};
+
+enum {
+    ECBS_TLV__NAME = 1,         // String
+    ECBS_TLV__VERSION = 2,      // [u8;3]
+    ECBS_TLV__SERIAL = 3,       // String
+    ECBS_TLV__TEST_PHRASE = 4,  // String
+    ECBS_TLV__FW_SIZE = 5,      // u32
+    ECBS_TLV__FW_CRC32 = 6,      // u32
 };
 
 typedef enum EcbsErr {
@@ -66,8 +71,16 @@ typedef enum EcbsErr {
     ECBS_ERR__NO_ENC_SESSION = 0x06,
     ECBS_ERR__INTERNAL = 0x07,
     ECBS_ERR__INCORRECT_SIGN = 0x08,
-    ECBS_ERR__ENC_NOT_SUPPORTED = 0x08,
+    ECBS_ERR__ENC_NOT_SUPPORTED = 0x09,
 } EcbsErr;
+
+typedef enum EcbsInternalErr {
+    ECBS_INTERNAL_ERR__ENC_NOT_ALLOWED = 1,
+    ECBS_INTERNAL_ERR__NO_SIGN = 2,
+    ECBS_INTERNAL_ERR__REAL_DATA_SIZE_NEGATIVE = 3,
+    ECBS_INTERNAL_ERR__DATA_SIZE_NOT_MULTIPLE_OF_BLOCK_SIZE = 4,
+    ECBS_INTERNAL_ERR__UNKNOWN_PD_TYPE = 5,
+} EcbsInternalErr;
 
 typedef enum EcbsState {
     ECBS_STATE__RECEIVE,
@@ -115,16 +128,17 @@ typedef struct Ecbs {
     bool (*get_write_state)(void);
 } Ecbs;
 
-void ecbs__init(
+
+int ecbs__init(
     struct Ecbs* ecbs,
     uint8_t addr,
     uint32_t (*get_time_ms)(void),
     bool (*read)(uint8_t* byte),
     bool (*write)(uint8_t data));
 
-void ecbs__init_enc(struct Ecbs* ecbs, const uint8_t auth_key[16], uint32_t (*get_rand)(void));
+int ecbs__init_enc(struct Ecbs* ecbs, const uint8_t auth_key[16], uint32_t (*get_rand)(void));
 
-void ecbs__init_write_buf(
+int ecbs__init_write_buf(
     struct Ecbs* ecbs,
     bool (*write_buf)(uint8_t const* data, uint16_t ndata),
     bool (*get_write_state)(void));
@@ -140,6 +154,7 @@ int ecbs__add_sig(
 
 int ecbs__allow_stream_at_sig(struct Ecbs* ecbs, uint16_t sig, uint8_t stream_pub_period_ms);
 int ecbs__flush_stream_at_sig(struct Ecbs* ecbs, uint16_t sig);
+bool ecbs__is_streaming(struct Ecbs const* ecbs);
 
 void ecbs__add_err_description(struct Ecbs* ecbs, char const* const fmt, ...);
 

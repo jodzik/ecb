@@ -2,13 +2,20 @@ cmake_minimum_required(VERSION 3.9)
 
 project(ecb-slave-c-server)
 
+add_compile_definitions(SAFE_C_LOG_EN__DBG=1)
+add_compile_definitions(SAFE_C_LOG_EN__INF=1)
+add_compile_definitions(SAFE_C_LOG_EN__WRN=1)
+add_compile_definitions(SAFE_C_LOG_EN__ERR=1)
+add_compile_definitions(ECBS_DEBUG_EN=1)
+
 add_executable(ecb-slave-c-server
     main.cpp
+    safe_c.c
     crc32.c
     ecb-slave.c
     framer7b.c
     raiden.c
-    stdser.c
+    serdes.c
     serial/serial.cc
     serial/impl/win.cc
     serial/impl/unix.cc

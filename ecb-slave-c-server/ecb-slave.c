@@ -2,7 +2,8 @@
 #include "framer7b.h"
 #include "crc32.h"
 #include "raiden.h"
-#include "stdser.h"
+#include "serdes.h"
+#include "safe_c.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -11,33 +12,34 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#define ECBS_DEBUG_EN                   1
 
 #define IS_TIME_EXPIRED(tle, period) (ecbs->get_time_ms() - tle >= period || ecbs->get_time_ms() < tle)
 #define IS_TIME_EXPIRED_EX(tle, period, now) (now - tle >= period || now < tle)
 
-#if ECBS_DEBUG_EN
 
-#include <stdio.h>
-#ifdef WIN32
-#define SLASH   '\\'
-#elif defined __linux
-#define SLASH '/'
-#else
-#error "unknown os"
-#endif
-#define __FILENAME__ (strrchr(__FILE__, SLASH) ? strrchr(__FILE__, SLASH) + 1 : __FILE__)
-#define PRINT(fmt) do { printf("%s: " fmt "\n", __FILENAME__); } while (0)
-#define PRINTF(fmt, ...) do { printf("%s: " fmt "\n", __FILENAME__, __VA_ARGS__); } while (0)
-
-#else
-#define PRINT(fmt) do {} while (0)
-#define PRINTF(fmt, ...) do {} while (0)
-#endif
+enum {
+    ECBS__ENC_FILLER = 0x5A,
+    ECBS__PD_TYPE_MASK = 0b1111,
+    ECBS__PD_DIR_MASK = 0b10000,
+    ECBS__PD_DIR_IS_REQ = ECBS__PD_DIR_MASK,
+    ECBS__PD_DIR_IS_ANSW = 0x00,
+    ECBS__PD_IS_ENC_MASK = 0b100000,
+    ECBS__PD_TYPE_WRITE = 0b0000,
+    ECBS__PD_TYPE_WRITE_NO_ANSW = 0b0010,
+    ECBS__PD_TYPE_READ = 0b0001,
+    ECBS__PD_TYPE_STREAM_OPEN = 0b0011,
+    ECBS__PD_TYPE_STREAM_CLOSE = 0b0100,
+    ECBS__PD_TYPE_STREAM_DATA = 0b0101,
+    ECBS__PD_TYPE_ENC_OPEN = 0b0110,
+    ECBS__PD_TYPE_WRITE_AUTH_REQ = 0b0111,
+    ECBS__PD_TYPE_WRITE_WITH_AUTH = 0b1000,
+    ECBS__PD_TYPE_ERR = 0b1111,
+};
 
 enum {
     // ADDR(1) + PD(1) + SIGNAL(2) + NFILL(1) + CRC32(4)
     PACKET_DATA_POS = 5,
+
     NO_SIGNAL = -1,
 };
 
@@ -82,17 +84,18 @@ static int find_sig_index(Ecbs* ecbs, int sig) {
 
 /// @brief Make packet in buf - insert service info, encrypt if needed
 /// @param ndata - size of optionally already written data to #PACKET_DATA_POS
-static uint16_t make_packet(
+static int make_packet(
     struct Ecbs* const ecbs,
     bool const is_enc,
     uint8_t const pd_type,
     uint16_t const signal,
-    uint16_t ndata)
+    uint16_t const ndata,
+    uint16_t* const packet_size)
 {
     uint8_t* const buf = framer7b__get_packet_buf_to_make(&ecbs->framer);
     buf[0] = ecbs->addr;
     buf[1] = pd_type | ECBS__PD_DIR_IS_ANSW | (is_enc ? ECBS__PD_IS_ENC_MASK : 0x00);
-    stdser_s16(signal, &buf[2]);
+    u16_to_be(&buf[2], signal);
     uint8_t nfill = 0;
     if (is_enc) {
         nfill = 8 - (ndata % 8);
@@ -100,12 +103,13 @@ static uint16_t make_packet(
             nfill = 0;
         }
         memset(&buf[ndata + PACKET_DATA_POS], ECBS__ENC_FILLER, nfill);
-        raiden_encode_buf(ecbs->session_key, &buf[PACKET_DATA_POS], ndata + nfill);
+        TRY(raiden_encode_buf(ecbs->session_key, &buf[PACKET_DATA_POS], ndata + nfill));
     }
     buf[4] = nfill;
     uint16_t const crc_pos = PACKET_DATA_POS + ndata + nfill;
-    stdser_s32(crc32(buf, crc_pos), &buf[crc_pos]);
-    return ndata + nfill + ECBS__MIN_PACKET_SIZE;
+    u32_to_be(&buf[crc_pos], crc32(buf, crc_pos));
+    *packet_size = ndata + nfill + ECBS__MIN_PACKET_SIZE;
+    return 0;
 }
 
 static void encode_packet_and_send_as_frame(struct Ecbs* const ecbs, uint16_t ndata) {
@@ -115,344 +119,387 @@ static void encode_packet_and_send_as_frame(struct Ecbs* const ecbs, uint16_t nd
     ecbs->is_buffer_sending = false;
 }
 
-static void send_err(struct Ecbs* const ecbs, uint16_t const signal, bool const is_enc, enum EcbsErr const err) {
+static int send_err(
+    struct Ecbs* const ecbs,
+    uint16_t const signal,
+    bool const is_enc,
+    enum EcbsErr const err,
+    int app_err)
+{
+    uint16_t packet_size = 0;
     uint8_t* const buf = framer7b__get_packet_buf_to_make(&ecbs->framer);
     buf[PACKET_DATA_POS] = (uint8_t)err;
-    encode_packet_and_send_as_frame(ecbs, make_packet(
-        ecbs, is_enc, ECBS__PD_TYPE_ERR, signal, ecbs->err_description_size + 1));
+    if (app_err < 0) {
+        app_err = -app_err;
+    }
+    u32_to_be(&buf[1], (uint32_t)app_err);
+    TRY(make_packet(ecbs, is_enc, ECBS__PD_TYPE_ERR, signal, 1 + 4 + ecbs->err_description_size, &packet_size));
+    encode_packet_and_send_as_frame(ecbs, packet_size);
+
+    return 0;
 }
 
-static void send_stream_data(struct Ecbs* const ecbs) {
-    if (NO_SIGNAL == ecbs->stream_sig) {
-        return;
-    }
+static int send_stream_data(struct Ecbs* const ecbs) {
+    ASSERT(NO_SIGNAL != ecbs->stream_sig, ER_NOT_PERM);
+
     struct EcbsSig* const signal = &ecbs->sig[ecbs->stream_sig];
     bool const is_enc_needed = ECBS_PROTECT_LEVEL__NO != signal->protect_level;
     uint8_t* const buf = framer7b__get_packet_buf_to_make(&ecbs->framer);
     int const rc = signal->read(signal->sig, &buf[PACKET_DATA_POS]);
     if (rc >= 0) {
-        if (rc > ECBS__MAX_DATA_SIZE) {
-            PRINTF("Fail to send stream data for %i: read data too big - %i", signal->sig, rc);
-            return;
-        }
-        encode_packet_and_send_as_frame(ecbs, make_packet(
-            ecbs, is_enc_needed, ECBS__PD_TYPE_STREAM_DATA, (uint16_t)signal->sig, (uint16_t)rc));
+        uint16_t packet_size = 0;
+        ASSERTf(rc <= ECBS__MAX_DATA_SIZE, ER_INVAL,
+            "Fail to send stream data for %i: read data too big - %i", signal->sig, rc);
+        TRY(make_packet(ecbs, is_enc_needed, ECBS__PD_TYPE_STREAM_DATA, (uint16_t)signal->sig,
+            (uint16_t)rc, &packet_size));
+        encode_packet_and_send_as_frame(ecbs, packet_size);
         signal->tl_stream_pub_ms = ecbs->get_time_ms();
+    } else {
+        ECBS_DBG_PRINTF("Fail to send stream data for %i: fail to signal->read(): %i", signal->sig, rc);
+        return rc;
     }
-    else {
-        PRINTF("Fail to send stream data for %i: fail to signal->read(): %i", signal->sig, rc);
-    }
+
+    return 0;
 }
 
-static void handle_read_request(struct Ecbs* const ecbs, struct Packet const* packet) {
+static int handle_read_request(struct Ecbs* const ecbs, struct Packet const* packet) {
     bool const is_enc = packet->pd & ECBS__PD_IS_ENC_MASK;
     struct EcbsSig* const sig = find_sig(ecbs, packet->signal);
-    if (is_broadcast_addr(packet->addr)) {
-        PRINT("Fail to handle read request: broadcast addr not allowed");
-        return;
-    }
+    
+    ASSERTm(!is_broadcast_addr(packet->addr), ER_NOT_PERM, "Fail to handle read request: broadcast addr not allowed");
+
     if (NULL == sig) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG, 0);
+        return 0;
     }
     if (NULL == sig->read) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION, 0);
+        return 0;
     }
     bool const is_enc_needed = ECBS_PROTECT_LEVEL__NO != sig->protect_level;
     if (is_enc_needed && !is_enc) {
-        PRINT("Cancel handle packet: enc needed");
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__ENC_REQUIRED);
-        return;
+        ECBS_DBG_PRINT("Cancel handle packet: enc needed");
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__ENC_REQUIRED, 0);
+        return 0;
     }
     uint8_t* const buf = framer7b__get_packet_buf_to_make(&ecbs->framer);
     int const rc = sig->read(sig->sig, &buf[PACKET_DATA_POS]);
     if (rc >= 0) {
-        if (rc > ECBS__MAX_DATA_SIZE) {
-            PRINTF("Fail to handle read request: read data too big - %i", rc);
-            return;
-        }
-        encode_packet_and_send_as_frame(ecbs, make_packet(
-            ecbs, is_enc, ECBS__PD_TYPE_READ, (uint16_t)sig->sig, (uint16_t)rc));
+        uint16_t packet_size = 0;
+        ASSERTf(rc <= ECBS__MAX_DATA_SIZE, ER_INVAL, "Fail to handle read request: read data too big - %i", rc);
+        make_packet(ecbs, is_enc, ECBS__PD_TYPE_READ, (uint16_t)sig->sig, (uint16_t)rc, &packet_size);
+        encode_packet_and_send_as_frame(ecbs, packet_size);
+    } else {
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__APP, rc);
+        ECBS_DBG_PRINTF("Fail to read signal: user error: %i", rc);
     }
-    else {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__APP);
-    }
+
+    return 0;
 }
 
-static void handle_write_request(struct Ecbs* const ecbs, struct Packet const* packet) {
+static int handle_write_request(struct Ecbs* const ecbs, struct Packet const* packet) {
     bool const is_enc = packet->pd & ECBS__PD_IS_ENC_MASK;
     struct EcbsSig* const sig = find_sig(ecbs, packet->signal);
-    if (is_broadcast_addr(packet->addr)) {
-        PRINT("Fail to handle write request: broadcast addr not allowed");
-        return;
-    }
+    
+    ASSERTm(!is_broadcast_addr(packet->addr), ER_NOT_PERM, "Fail to handle write request: broadcast addr not allowed");
+
     if (NULL == sig) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG, 0);
+        return 0;
     }
     if (NULL == sig->write) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION, 0);
+        return 0;
     }
     bool const is_enc_needed = ECBS_PROTECT_LEVEL__NO != sig->protect_level;
     if (is_enc_needed && !is_enc) {
-        PRINT("Cancel handle packet: enc needed");
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__ENC_REQUIRED);
-        return;
+        ECBS_DBG_PRINT("Cancel handle packet: enc needed");
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__ENC_REQUIRED, 0);
+        return 0;
     }
     if (ECBS_PROTECT_LEVEL__ENC_AND_WRITE_AUTH == sig->protect_level) {
-        PRINT("Cancel handle packet: auth write only");
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__AUTH_REQUIRED);
-        return;
+        ECBS_DBG_PRINT("Cancel handle packet: auth write only");
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__AUTH_REQUIRED, 0);
+        return 0;
     }
 
     int const rc = sig->write(sig->sig, packet->data, packet->ndata);
     if (0 == rc) {
-        encode_packet_and_send_as_frame(ecbs, make_packet(
-            ecbs, is_enc, ECBS__PD_TYPE_WRITE, (uint16_t)sig->sig, 0));
+        uint16_t packet_size = 0;
+        TRY(make_packet(ecbs, is_enc, ECBS__PD_TYPE_WRITE, (uint16_t)sig->sig, 0, &packet_size));
+        encode_packet_and_send_as_frame(ecbs, packet_size);
+    } else {
+        ECBS_DBG_PRINTF("Fail to write signal: user error: %i", rc);
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__APP, rc);
     }
-    else {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__APP);
-    }
+
+    return 0;
 }
 
-static void handle_write_no_answ_request(struct Ecbs* const ecbs, struct Packet const* packet) {
+static int handle_write_no_answ_request(struct Ecbs* const ecbs, struct Packet const* packet) {
+    int rc = 0;
     bool const is_enc = packet->pd & ECBS__PD_IS_ENC_MASK;
     struct EcbsSig* const sig = find_sig(ecbs, packet->signal);
     if (NULL == sig) {
-        return;
+        return 0;
     }
     if (NULL == sig->write) {
-        return;
+        return 0;
     }
     bool const is_enc_needed = ECBS_PROTECT_LEVEL__NO != sig->protect_level;
     if (is_enc_needed && !is_enc) {
-        PRINT("Cancel handle write_no_answ request: enc needed");
-        return;
+        ECBS_DBG_PRINT("Cancel handle write_no_answ request: enc needed");
+        return 0;
     }
     if (ECBS_PROTECT_LEVEL__ENC_AND_WRITE_AUTH == sig->protect_level) {
-        PRINT("Cancel handle write_no_answ request: auth write only");
-        return;
+        ECBS_DBG_PRINT("Cancel handle write_no_answ request: auth write only");
+        return 0;
     }
 
-    sig->write(sig->sig, packet->data, packet->ndata);
+    rc = sig->write(sig->sig, packet->data, packet->ndata);
+    if (rc) {
+        ECBS_DBG_PRINTF("Fail to write signal: user error: %i", rc);
+    }
+
+    return 0;
 }
 
-static void handle_write_auth_request(struct Ecbs* const ecbs, struct Packet const* packet) {
+static int handle_write_auth_request(struct Ecbs* const ecbs, struct Packet const* packet) {
     bool const is_enc = packet->pd & ECBS__PD_IS_ENC_MASK;
     struct EcbsSig* const sig = find_sig(ecbs, packet->signal);
-    if (is_broadcast_addr(packet->addr)) {
-        PRINT("Fail to handle write_auth request: broadcast addr not allowed");
-        return;
-    }
+    uint16_t packet_size = 0;
+    
+    ASSERTm(!is_broadcast_addr(packet->addr), ER_NOT_PERM,
+        "Fail to handle write_auth request: broadcast addr not allowed");
+
     if (NULL == sig) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG, 0);
+        return 0;
     }
     if (NULL == sig->write) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION, 0);
+        return 0;
     }
     if (is_enc) {
-        PRINT("Cancel handle write_auth request: enc not allowed");
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__INTERNAL);
-        return;
+        ECBS_DBG_PRINT("Cancel handle write_auth request: enc not allowed");
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__INTERNAL, ECBS_INTERNAL_ERR__ENC_NOT_ALLOWED);
+        return 0;
     }
     if (!ecbs->is_enc_session) {
-        PRINT("Cancel handle write_auth request: no enc session");
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_ENC_SESSION);
-        return;
+        ECBS_DBG_PRINT("Cancel handle write_auth request: no enc session");
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_ENC_SESSION, 0);
+        return 0;
     }
     uint8_t* const buf = framer7b__get_packet_buf_to_make(&ecbs->framer);
-    stdser_s32(ecbs->get_rand(), ecbs->write_auth_rand_key);
-    stdser_s32(ecbs->get_rand(), &ecbs->write_auth_rand_key[4]);
+    u32_to_be(ecbs->write_auth_rand_key, ecbs->get_rand());
+    u32_to_be(&ecbs->write_auth_rand_key[4], ecbs->get_rand());
     memcpy(ecbs->write_auth_rand_key, &buf[PACKET_DATA_POS], sizeof(uint64_t));
-    encode_packet_and_send_as_frame(ecbs, make_packet(
-        ecbs, false, ECBS__PD_TYPE_WRITE_AUTH_REQ, (uint16_t)sig->sig, sizeof(uint64_t)));
+    TRY(make_packet(ecbs, false, ECBS__PD_TYPE_WRITE_AUTH_REQ, (uint16_t)sig->sig, sizeof(uint64_t), &packet_size));
+    encode_packet_and_send_as_frame(ecbs, packet_size);
+    
+    return 0;
 }
 
-static void handle_write_with_auth_request(struct Ecbs* const ecbs, struct Packet const* packet) {
+static int handle_write_with_auth_request(struct Ecbs* const ecbs, struct Packet const* packet) {
     bool const is_enc = packet->pd & ECBS__PD_IS_ENC_MASK;
     struct EcbsSig* const sig = find_sig(ecbs, packet->signal);
-    if (is_broadcast_addr(packet->addr)) {
-        PRINT("Fail to handle write request: broadcast addr not allowed");
-        return;
-    }
+    
+    ASSERTm(!is_broadcast_addr(packet->addr), ER_NOT_PERM, "Fail to handle write request: broadcast addr not allowed");
+
     if (NULL == sig) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG, 0);
+        return 0;
     }
     if (NULL == sig->write) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION, 0);
+        return 0;
     }
     if (!is_enc) {
-        PRINT("Cancel handle write_with_auth request: enc needed");
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__ENC_REQUIRED);
-        return;
+        ECBS_DBG_PRINT("Cancel handle write_with_auth request: enc needed");
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__ENC_REQUIRED, 0);
+        return 0;
     }
     if (packet->ndata < sizeof(uint64_t)) {
-        PRINTF("Cancel handle write_with_auth request: packet not contain sign, ndata=%i", packet->ndata);
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__INTERNAL);
-        return;
+        ERR_LOGf("Cancel handle write_with_auth request: packet not contain sign, ndata=%i", packet->ndata);
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__INTERNAL, ECBS_INTERNAL_ERR__NO_SIGN);
+        return ER_INVAL;
     }
     if (0 != memcmp(packet->data, ecbs->write_auth_rand_key, sizeof(uint64_t))) {
-        send_err(ecbs, packet->signal, true, ECBS_ERR__INCORRECT_SIGN);
-        return;
+        send_err(ecbs, packet->signal, true, ECBS_ERR__INCORRECT_SIGN, 0);
+        return 0;
     }
     int const rc = sig->write(sig->sig, &packet->data[sizeof(uint64_t)], packet->ndata - sizeof(uint64_t));
     if (0 == rc) {
-        encode_packet_and_send_as_frame(ecbs, make_packet(
-            ecbs, true, ECBS__PD_TYPE_WRITE_WITH_AUTH, (uint16_t)sig->sig, 0));
+        uint16_t packet_size = 0;
+        TRY(make_packet(ecbs, true, ECBS__PD_TYPE_WRITE_WITH_AUTH, (uint16_t)sig->sig, 0, &packet_size));
+        encode_packet_and_send_as_frame(ecbs, packet_size);
     }
     else {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__APP);
+        ECBS_DBG_PRINTF("Fail to write signal: user error: %i", rc);
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__APP, rc);
     }
+
+    return 0;
 }
 
-static void handle_stream_open_request(struct Ecbs* const ecbs, struct Packet const* packet) {
+static int handle_stream_open_request(struct Ecbs* const ecbs, struct Packet const* packet) {
     bool const is_enc = packet->pd & ECBS__PD_IS_ENC_MASK;
     struct EcbsSig* const sig = find_sig(ecbs, packet->signal);
-    if (is_broadcast_addr(packet->addr)) {
-        PRINT("Fail to handle stream_open request: broadcast addr not allowed");
-        return;
-    }
+    uint16_t packet_size = 0;
+
+    ASSERTm(!is_broadcast_addr(packet->addr), ER_NOT_PERM,
+        "Fail to handle stream_open request: broadcast addr not allowed");
+
     if (NULL == sig) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_SIG, 0);
+        return 0;
     }
     if (NULL == sig->read || !sig->is_stream_allowed) {
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION);
-        return;
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__NO_OPERATION, 0);
+        return 0;
     }
     bool const is_enc_needed = ECBS_PROTECT_LEVEL__NO != sig->protect_level;
     if (is_enc_needed && !is_enc) {
-        PRINT("Cancel handle stream_open request: enc needed");
-        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__ENC_REQUIRED);
-        return;
+        ECBS_DBG_PRINT("Cancel handle stream_open request: enc needed");
+        send_err(ecbs, packet->signal, is_enc, ECBS_ERR__ENC_REQUIRED, 0);
+        return 0;
     }
 
     ecbs->stream_sig = find_sig_index(ecbs, packet->signal);
 
-    encode_packet_and_send_as_frame(ecbs, make_packet(
-        ecbs, is_enc, ECBS__PD_TYPE_STREAM_OPEN, (uint16_t)sig->sig, 0));
+    TRY(make_packet(ecbs, is_enc, ECBS__PD_TYPE_STREAM_OPEN, (uint16_t)sig->sig, 0, &packet_size));
+    encode_packet_and_send_as_frame(ecbs, packet_size);
+
+    return 0;
 }
 
-static void handle_stream_close_request(struct Ecbs* const ecbs, struct Packet const* packet) {
+static int handle_stream_close_request(struct Ecbs* const ecbs, struct Packet const* packet) {
     bool const is_enc = packet->pd & ECBS__PD_IS_ENC_MASK;
 
     ecbs->stream_sig = NO_SIGNAL;
 
     if (!is_broadcast_addr(packet->addr)) {
-        encode_packet_and_send_as_frame(ecbs, make_packet(
-            ecbs, is_enc, ECBS__PD_TYPE_STREAM_CLOSE, 0, 0));
+        uint16_t packet_size = 0;
+        TRY(make_packet(ecbs, is_enc, ECBS__PD_TYPE_STREAM_CLOSE, 0, 0, &packet_size));
+        encode_packet_and_send_as_frame(ecbs, packet_size);
     }
+
+    return 0;
 }
 
-static void handle_enc_open_request(struct Ecbs* const ecbs, struct Packet const* packet) {
-    if (is_broadcast_addr(packet->addr)) {
-        PRINT("Fail to handle enc_open request: broadcast addr not allowed");
-        return;
-    }
+static int handle_enc_open_request(struct Ecbs* const ecbs, struct Packet const* packet) {
+    uint16_t packet_size = 0;
+
+    ASSERTm(!is_broadcast_addr(packet->addr), ER_NOT_PERM,
+        "Fail to handle enc_open request: broadcast addr not allowed");
+
     if (!ecbs->is_enc_init) {
-        send_err(ecbs, 0, false, ECBS_ERR__ENC_NOT_SUPPORTED);
-        return;
+        send_err(ecbs, 0, false, ECBS_ERR__ENC_NOT_SUPPORTED, 0);
+        return 0;
     }
 
     uint8_t* const buf = framer7b__get_packet_buf_to_make(&ecbs->framer);
     srand(ecbs->get_rand());
     for (uint8_t i = 0; i < RAIDEN__KEY_SIZE; i += sizeof(uint16_t)) {
-        stdser_s16((uint16_t)rand(), &ecbs->session_key[i]);
+        u16_to_be(&ecbs->session_key[i], (uint16_t)rand());
     }
-    raiden_encode(ecbs->auth_key, ecbs->session_key, &buf[PACKET_DATA_POS], RAIDEN__KEY_SIZE);
-    encode_packet_and_send_as_frame(ecbs, make_packet(ecbs, false, ECBS__PD_TYPE_ENC_OPEN, 0, RAIDEN__KEY_SIZE));
+    TRY(raiden_encode(ecbs->auth_key, ecbs->session_key, &buf[PACKET_DATA_POS], RAIDEN__KEY_SIZE));
+    TRY(make_packet(ecbs, false, ECBS__PD_TYPE_ENC_OPEN, 0, RAIDEN__KEY_SIZE, &packet_size));
+    encode_packet_and_send_as_frame(ecbs, packet_size);
     ecbs->is_enc_session = true;
+
+    return 0;
 }
 
-static void handle_packet(Ecbs* ecbs, size_t ndata) {
+static int handle_packet(Ecbs* ecbs, size_t ndata) {
     ecbs->err_description_size = 0;
 
     if (ndata < ECBS__MIN_PACKET_SIZE) {
-        PRINTF("Fail to parse packet: ndata(%i) less than minimum packet size %i", ndata, ECBS__MIN_PACKET_SIZE);
-        return;
+        ECBS_DBG_PRINTF("Fail to parse packet: ndata(%i) less than minimum packet size %i", ndata, ECBS__MIN_PACKET_SIZE);
+        return ER_1;
     }
 
     uint8_t* const buf = framer7b__get_received_packet_buf(&ecbs->framer);
-    uint32_t const crc_calc = crc32(buf, ndata - 4);
-    uint32_t const crc_recv = stdser_g32(&buf[ndata-4]);
+    uint32_t const crc_calc = crc32(buf, ndata - sizeof(uint32_t));
+    uint32_t const crc_recv = u32_from_be(&buf[ndata - sizeof(uint32_t)]);
     if (crc_calc != crc_recv) {
-        PRINTF("Fail to parse packet: crc mismatch, crc_calc=%08X crc_recv=%08X", crc_calc, crc_recv);
-        return;
+        ECBS_DBG_PRINTF("Fail to parse packet: crc mismatch, crc_calc=%08X crc_recv=%08X", crc_calc, crc_recv);
+        return ER_2;
     }
     uint8_t const nfill = buf[4];
     int real_data_size = ndata - (ECBS__MIN_PACKET_SIZE + nfill);
     if (real_data_size < 0) {
-        PRINTF("Fail to parse packet: real_data_size(%i) < 0, ndata=%i nfill=%i", real_data_size, ndata, nfill);
-        send_err(ecbs, 0, false, ECBS_ERR__INTERNAL);
-        return;
+        ECBS_DBG_PRINTF("Fail to parse packet: real_data_size(%i) < 0, ndata=%i nfill=%i", real_data_size, ndata, nfill);
+        send_err(ecbs, 0, false, ECBS_ERR__INTERNAL, ECBS_INTERNAL_ERR__REAL_DATA_SIZE_NEGATIVE);
+        return ER_3;
     }
     struct Packet const packet = {
         .addr = buf[0],
         .pd = buf[1],
-        .signal = stdser_g16(&buf[2]),
+        .signal = u16_from_be(&buf[2]),
         .nfill = nfill,
         .data = &buf[5],
         .ndata = (uint16_t)real_data_size,
     };
 
     if (!is_need_handle_addr(ecbs, packet.addr)) {
-        return;
+        ECBS_DBG_PRINTF("Cancel handle packet: addr %i does not need to be handled", packet.addr);
+        return ER_4;
     }
 
     if ((packet.pd & ECBS__PD_DIR_MASK) != ECBS__PD_DIR_IS_REQ) {
-        return;
+        ECBS_DBG_PRINTF("Cancel handle packet: pd %02X is not REQUEST type", packet.pd);
+        return ER_5;
     }
 
     if (packet.pd & ECBS__PD_IS_ENC_MASK) {
         if ((packet.ndata + packet.nfill) % 8 != 0) {
-            PRINTF("Fail to decrypt: ndata(%i) + nfill(%i) not multiple to 8", packet.ndata, packet.nfill);
-            send_err(ecbs, 0, false, ECBS_ERR__INTERNAL);
-            return;
+            ECBS_DBG_PRINTF("Fail to decrypt: ndata(%i) + nfill(%i) not multiple of 8", packet.ndata, packet.nfill);
+            send_err(ecbs, 0, false, ECBS_ERR__INTERNAL, ECBS_INTERNAL_ERR__DATA_SIZE_NOT_MULTIPLE_OF_BLOCK_SIZE);
+            return ER_6;
         }
         if (!ecbs->is_enc_session) {
-            PRINT("Fail to decrypt: no enc session");
-            send_err(ecbs, 0, false, ECBS_ERR__NO_ENC_SESSION);
-            return;
+            ECBS_DBG_PRINT("Fail to decrypt: no enc session");
+            send_err(ecbs, 0, false, ECBS_ERR__NO_ENC_SESSION, 0);
+            return ER_7;
         }
-        raiden_decode_buf(ecbs->session_key, packet.data, packet.ndata + packet.nfill);
+        TRY(raiden_decode_buf(ecbs->session_key, packet.data, packet.ndata + packet.nfill));
     }
 
     uint8_t const pd_type = packet.pd & ECBS__PD_TYPE_MASK;
 
     if (ECBS__PD_TYPE_READ == pd_type) {
-        handle_read_request(ecbs, &packet);
+        TRY(handle_read_request(ecbs, &packet));
     }
     else if (ECBS__PD_TYPE_WRITE == pd_type) {
-        handle_write_request(ecbs, &packet);
+        TRY(handle_write_request(ecbs, &packet));
     }
     else if (ECBS__PD_TYPE_WRITE_NO_ANSW == pd_type) {
-        handle_write_no_answ_request(ecbs, &packet);
+        TRY(handle_write_no_answ_request(ecbs, &packet));
     }
     else if (ECBS__PD_TYPE_WRITE_AUTH_REQ == pd_type) {
-        handle_write_auth_request(ecbs, &packet);
+        TRY(handle_write_auth_request(ecbs, &packet));
     }
     else if (ECBS__PD_TYPE_WRITE_WITH_AUTH == pd_type) {
-        handle_write_with_auth_request(ecbs, &packet);
+        TRY(handle_write_with_auth_request(ecbs, &packet));
     }
     else if (ECBS__PD_TYPE_STREAM_OPEN == pd_type) {
-        handle_stream_open_request(ecbs, &packet);
+        TRY(handle_stream_open_request(ecbs, &packet));
     }
     else if (ECBS__PD_TYPE_STREAM_CLOSE == pd_type) {
-        handle_stream_close_request(ecbs, &packet);
+        TRY(handle_stream_close_request(ecbs, &packet));
     }
     else if (ECBS__PD_TYPE_ENC_OPEN == pd_type) {
-        handle_enc_open_request(ecbs, &packet);
+        TRY(handle_enc_open_request(ecbs, &packet));
     }
     else {
-        PRINTF("Fail to handle packet: unknown PD_TYPE(%02X)", pd_type);
-        send_err(ecbs, packet.signal, packet.pd & ECBS__PD_IS_ENC_MASK, ECBS_ERR__INTERNAL);
+        ECBS_DBG_PRINTF("Fail to handle packet: unknown PD_TYPE(%02X)", pd_type);
+        send_err(ecbs, packet.signal, packet.pd & ECBS__PD_IS_ENC_MASK,
+            ECBS_ERR__INTERNAL, ECBS_INTERNAL_ERR__UNKNOWN_PD_TYPE);
+        return ER_10;
     }
+
+    return 0;
 }
 
 /// @brief Инициализация библиотеки.
@@ -463,7 +510,7 @@ static void handle_packet(Ecbs* ecbs, size_t ndata) {
 ///     Необходимо возвращать true, если байт считан, иначе false.
 /// @param[in] write - Коллбек для записи байт в аппаратный интерфейс, напр. UART.
 ///     Необходимо возвращать true, если байт успешно записан, иначе false.
-void ecbs__init(
+int ecbs__init(
     struct Ecbs* const ecbs,
     uint8_t const addr,
     uint32_t (*get_time_ms)(void),
@@ -485,6 +532,7 @@ void ecbs__init(
     for (uint16_t i = 0; i < ECBS__MAX_SIG; i++) {
         ecbs->sig[i].sig = NO_SIGNAL;
     }
+    return 0;
 }
 
 /// @brief Инициализировать продвинутую неблокирующую запись буфера.
@@ -493,19 +541,21 @@ void ecbs__init(
 ///     необходимо возвращать true при принятии буфера на запись, иначе false.
 /// @param get_write_state - Коллбек для проверки состояния записи буфера,
 ///     необходимо возвращать true, если запись завершена, иначе false.
-void ecbs__init_write_buf(
+int ecbs__init_write_buf(
     struct Ecbs* const ecbs,
     bool (*write_buf)(uint8_t const* data, uint16_t ndata),
     bool (*get_write_state)(void))
 {
     ecbs->write_buf = write_buf;
     ecbs->get_write_state = get_write_state;
+    return 0;
 }
 
-void ecbs__init_enc(struct Ecbs* const ecbs, const uint8_t auth_key[16], uint32_t (*get_rand)(void)) {
+int ecbs__init_enc(struct Ecbs* const ecbs, const uint8_t auth_key[16], uint32_t (*get_rand)(void)) {
     memcpy(ecbs->auth_key, auth_key, sizeof(ecbs->auth_key));
     ecbs->get_rand = get_rand;
     ecbs->is_enc_init = true;
+    return 0;
 }
 
 void ecbs__drop_enc_session(struct Ecbs* const ecbs) {
@@ -617,11 +667,15 @@ int ecbs__flush_stream_at_sig(struct Ecbs* const ecbs, uint16_t const sig) {
     return 0;
 }
 
+bool ecbs__is_streaming(struct Ecbs const* const ecbs) {
+    return ecbs->stream_sig != NO_SIGNAL;
+}
+
 void ecbs__add_err_description(struct Ecbs* const ecbs, char const* const fmt, ...) {
     va_list args = {0};
     va_start(args, fmt);
     uint8_t* const buf = framer7b__get_packet_buf_to_make(&ecbs->framer);
-    int const rc = vsnprintf(&buf[PACKET_DATA_POS + 1], ECBS__MAX_DATA_SIZE, fmt, args);
+    int const rc = vsnprintf((char*)&buf[PACKET_DATA_POS + 1], ECBS__MAX_DATA_SIZE, fmt, args);
     va_end(args);
     if (rc > 0) {
         ecbs->err_description_size = (uint16_t)rc;
