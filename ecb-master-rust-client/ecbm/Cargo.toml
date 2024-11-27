@@ -1,0 +1,16 @@
+[package]
+name = "ecbm"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+thiserror = "2.0.3"
+
+crc = { path = "../crc" }
+raiden = { path = "../raiden" }
+framer7b ={ path = "../framer7b" }
+num-traits = "0.2.19"
+num-derive = "0.4.2"
+num = "0.4.3"
+log = "0.4.22"
