@@ -121,6 +121,7 @@ class Ecbm {
   static const broadcastAddress = 0;
   static const int tlvCodeTestPhrase = 4;
   static const int tlvCodeFwSize = 5;
+  static const int errorCodeApp = 1;
 
   final EcbmIoInterface io;
   final List<EcbmEncSession> _encSessions = <EcbmEncSession>[];
@@ -491,8 +492,10 @@ class Ecbm {
     }
     if (pd & _pdTypeMask == _pdTypeErr) {
       int err = data.getUint8(0);
-      var description = String.fromCharCodes(Uint8List.sublistView(data, 1));
-      throw FormatException("Error response($err): $description");
+      int app_err = data.getUint32(1);
+      var description = String.fromCharCodes(Uint8List.sublistView(data, 5));
+      String appErrStr = err == errorCodeApp ? ", $app_err" : "";
+      throw FormatException("Error response($err$appErrStr): $description");
     }
     if (pd & _pdTypeMask != pdType) {
       int actual = pd & _pdTypeMask;
