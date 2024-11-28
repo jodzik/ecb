@@ -600,9 +600,10 @@ enum StreamCtl {
     Close,
 }
 
-struct EncSession {
-    addr: u8,
-    key: [u8; raiden::KEY_SIZE],
+#[derive(Debug, Clone)]
+pub struct EncSession {
+    pub addr: u8,
+    pub key: [u8; raiden::KEY_SIZE],
 }
 
 pub struct Ecbm<S> {
@@ -678,6 +679,13 @@ impl<S> Ecbm<S>
 
     pub fn drop_all_enc_sessions(&mut self) {
         self.enc_sessions.clear();
+    }
+
+    pub fn find_enc_session<'a>(&'a self, addr: u8) -> Option<&'a EncSession> {
+        match self._find_enc_session(addr) {
+            Ok(v) => Some(v),
+            Err(_) => None,
+        }
     }
 
     pub fn read(&mut self, addr: u8, sig: u16, timeout: Option<Duration>) -> Result<Vec<u8>, Error> {
