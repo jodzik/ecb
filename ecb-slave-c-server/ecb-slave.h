@@ -34,7 +34,7 @@ enum {
 
 enum {
     ECBS__BROADCAST_ADDR = 0x00,
-    ECBS__MIN_PACKET_SIZE = 9,
+    ECBS__MIN_PACKET_SIZE = 10,
     ECBS__MAX_DATA_SIZE = FRAMER7B__DATA_SIZE - ECBS__MIN_PACKET_SIZE,
 };
 
@@ -42,6 +42,7 @@ enum {
     ECBS_SIG__RESET = 0,
     ECBS_SIG__INFO = 1,
     ECBS_SIG__ADDR = 2,
+    ECBS_SIG__SERIAL = 13,
     ECBS_SIG__AUTH_KEY = 14,
     ECBS_SIG__PICK = 15,
     
@@ -118,6 +119,7 @@ typedef struct Ecbs {
     uint8_t write_auth_rand_key[sizeof(uint64_t)];
     int stream_sig;
     uint32_t tl_read;
+    uint32_t tl_master_activity;
     bool is_buffer_sending;
 
     bool (*read)(uint8_t* byte);
@@ -145,6 +147,8 @@ int ecbs__init_write_buf(
 
 void ecbs__drop_enc_session(struct Ecbs* ecbs);
 
+int ecbs__announce(struct Ecbs* ecbs);
+
 int ecbs__add_sig(
     struct Ecbs* ecbs,
     uint16_t sig,
@@ -153,8 +157,10 @@ int ecbs__add_sig(
     int (*write)(uint16_t sig, const uint8_t* data, uint16_t ndata));
 
 int ecbs__allow_stream_at_sig(struct Ecbs* ecbs, uint16_t sig, uint8_t stream_pub_period_ms);
-int ecbs__flush_stream_at_sig(struct Ecbs* ecbs, uint16_t sig);
+int ecbs__force_pub_stream_at_sig(struct Ecbs* ecbs, uint16_t sig);
 bool ecbs__is_streaming(struct Ecbs const* ecbs);
+
+uint32_t ecbs__get_tl_master_activity(struct Ecbs const* ecbs);
 
 void ecbs__add_err_description(struct Ecbs* ecbs, char const* const fmt, ...);
 

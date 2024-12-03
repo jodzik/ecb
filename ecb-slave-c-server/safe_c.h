@@ -31,7 +31,7 @@
 
 #if SAFE_C_LOG_EN__INF
     #define INF_LOG(fmt) LOG_WITH_PREFIX("[INF]", fmt)
-    #define INF_LOGf(fmt, ...) LOGf_WITH_PREFIX("[DBG]", fmt, __VA_ARGS__)
+    #define INF_LOGf(fmt, ...) LOGf_WITH_PREFIX("[INF]", fmt, __VA_ARGS__)
 #else
     #define INF_LOG(fmt) LOG_MOCK
     #define INF_LOGf(fmt, ...) LOG_MOCK
@@ -55,15 +55,17 @@
 
 #define __FILENAME__ (strrchr(__FILE__, SLASH) ? strrchr(__FILE__, SLASH) + 1 : __FILE__)
 
-#define TRY(func_expr) do {int _result = func_expr; if (0 != _result) {ERR_LOGf("Fail to call " #func_expr ": %i\n", _result); return _result;}} while (0)
-#define TRY_PASS(func_expr) do {int _result = func_expr; if (0 != _result) {ERR_LOGf("Fail to call " #func_expr ": %i\n", _result);}} while (0)
-#define TRYf_PASS(func_expr, fmt, ...) do {int _result = func_expr; if (0 != _result) {ERR_LOGf("Fail to call " #func_expr ": %i, " fmt "\n", _result, __VA_ARGS__);}} while (0)
-#define TRY_PASS_EX(func_expr) do {int _result = func_expr; if (0 != _result) {ERR_LOGf("Fail to call " #func_expr ": %i\n", _result); rc = _result;}} while (0)
-#define TRY_EX(func_expr) do {int _result = func_expr; if (0 != _result) {ERR_LOGf("Fail to call " #func_expr ": %i\n", _result); rc = _result; goto finally;}} while (0)
-#define ASSERT(bool_expr, err) do { if (!(bool_expr)) {ERR_LOG("Assertion '" #bool_expr "' failed.\n"); return err;} } while (0)
-#define ASSERTm(bool_expr, err, msg) do { if (!(bool_expr)) {ERR_LOG("Assertion '" #bool_expr "' failed | " msg ".\n"); return err;} } while (0)
+#define TRY(func_expr) do {int _result = func_expr; if (0 != _result) {ERR_LOGf("Fail to call " #func_expr ": %i", _result); return _result;}} while (0)
+#define TRYs(func_expr) do {int _result = func_expr; if (0 != _result) {DBG_LOGf("Fail to call " #func_expr ": %i", _result); return _result;}} while (0)
+#define TRY_PASS(func_expr) do {int _result = func_expr; if (0 != _result) {WRN_LOGf("Fail to call " #func_expr ": %i", _result);}} while (0)
+#define TRYf_PASS(func_expr, fmt, ...) do {int _result = func_expr; if (0 != _result) {WRN_LOGf("Fail to call " #func_expr ": %i, " fmt "", _result, __VA_ARGS__);}} while (0)
+#define TRY_PASS_EX(func_expr) do {int _result = func_expr; if (0 != _result) {WRN_LOGf("Fail to call " #func_expr ": %i", _result); rc = _result;}} while (0)
+#define TRY_EX(func_expr) do {int _result = func_expr; if (0 != _result) {ERR_LOGf("Fail to call " #func_expr ": %i", _result); rc = _result; goto finally;}} while (0)
+#define ASSERT(bool_expr, err) do { if (!(bool_expr)) {ERR_LOG("Assertion '" #bool_expr "' failed."); return err;} } while (0)
+#define ASSERTs(bool_expr, err) do { if (!(bool_expr)) {DBG_LOG("Assertion '" #bool_expr "' failed."); return err;} } while (0)
+#define ASSERTm(bool_expr, err, msg) do { if (!(bool_expr)) {ERR_LOG("Assertion '" #bool_expr "' failed | " msg "."); return err;} } while (0)
 #define ASSERTf(bool_expr, err, fmt, ...) do { if (!(bool_expr)) {ERR_LOGf("Assertion '" #bool_expr "' failed | " fmt ".\n", __VA_ARGS__); return err;} } while (0)
-#define ASSERT_EX(bool_expr, err) do { if (!(bool_expr)) {ERR_LOGf("Assertion '" #bool_expr "' failed.\n"); rc = err; goto finally;} } while (0)
+#define ASSERT_EX(bool_expr, err) do { if (!(bool_expr)) {ERR_LOGf("Assertion '" #bool_expr "' failed."); rc = err; goto finally;} } while (0)
 
 #define UNUSED(var) (void)var
 
@@ -71,7 +73,12 @@ enum {
     ER_NOT_PERM = -1,
     ER_NO_ENT = -2,
     ER_IO = -5,
+    ER_BAD_FILE = -9,
+    ER_NO_MEM = -12,
+    ER_ACCESS = -13,
+    ER_BUSY = -16,
     ER_INVAL = -22,
+    ER_ENT_TOO_BIG = -27,		
     ER_NOT_IMPL = -38,
     ER_OVERFLOW = -75,
     ER_NO_DATA = -61,
