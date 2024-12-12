@@ -10,12 +10,12 @@ add_compile_definitions(ECBS_DEBUG_EN=1)
 
 add_executable(ecb-slave-c-server
     main.cpp
-    safe_c.c
-    crc32.c
-    ecb-slave.c
-    framer7b.c
-    raiden.c
-    serdes.c
+    safe-c/safe_c.c
+    crc/crc32.c
+    ecb-slave/ecb-slave.c
+    ecb-slave/framer7b.c
+    raiden/raiden.c
+    serdes/serdes.c
     serial/serial.cc
     serial/impl/win.cc
     serial/impl/unix.cc

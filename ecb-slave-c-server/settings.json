@@ -64,7 +64,7 @@
         {
             "index": 40,
             "name": "bad-stream-test",
-            "mode": "wn",
+            "mode": "rn",
             "data": "BAD-STREAM-TEST-DATA",
             "stream_pub_period_ms": 255
         }

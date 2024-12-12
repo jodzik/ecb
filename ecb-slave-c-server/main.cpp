@@ -1,10 +1,10 @@
-#include "ecb-slave.h"
+#include "ecb-slave/ecb-slave.h"
 
 #include "serial/serial.h"
 #include "structopt.hpp"
 #include "circular_buffer.h"
-#include "tcp_listener.hpp"
-#include "tcp_stream.hpp"
+#include "ctcp/tcp_listener.hpp"
+#include "ctcp/tcp_stream.hpp"
 #include "json.hpp"
 
 #include <cstdint>

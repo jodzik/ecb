@@ -1,0 +1,18 @@
+[submodule "ecb-slave-c-server/raiden"]
+	path = ecb-slave-c-server/raiden
+	url = https://gt.marimax.me/lib-c/raiden
+[submodule "ecb-slave-c-server/crc"]
+	path = ecb-slave-c-server/crc
+	url = https://gt.marimax.me/lib-c/crc
+[submodule "ecb-slave-c-server/serdes"]
+	path = ecb-slave-c-server/serdes
+	url = https://gt.marimax.me/lib-c/serdes
+[submodule "ecb-slave-c-server/ecb-slave"]
+	path = ecb-slave-c-server/ecb-slave
+	url = https://gt.marimax.me/lib-c/ecb-slave
+[submodule "ecb-slave-c-server/ctcp"]
+	path = ecb-slave-c-server/ctcp
+	url = https://gt.marimax.me/lib-c/ctcp
+[submodule "ecb-slave-c-server/safe-c"]
+	path = ecb-slave-c-server/safe-c
+	url = https://gt.marimax.me/lib-c/safe-c
