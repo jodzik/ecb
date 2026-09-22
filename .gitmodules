@@ -13,3 +13,6 @@
 [submodule "ecb-slave-c-server/safe-c"]
 	path = ecb-slave-c-server/safe-c
 	url = git@github.com:jodzik/safe-c.git
+[submodule "ecb-slave-c-server/sockpp"]
+	path = ecb-slave-c-server/sockpp
+	url = https://github.com/fpagliughi/sockpp.git

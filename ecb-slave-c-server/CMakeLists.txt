@@ -19,8 +19,13 @@ add_subdirectory(crc-c)
 add_subdirectory(framer7b-c)
 add_subdirectory(ecbs-c)
 
+# Cache vars, not normal vars: sockpp resets the CMP0077 policy, so its option() would clobber them.
+set(SOCKPP_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(SOCKPP_BUILD_STATIC ON CACHE BOOL "" FORCE)
+add_subdirectory(sockpp)
+
 add_executable(ecb-slave-c-server
     main.cpp
 )
 
-target_link_libraries(ecb-slave-c-server ecbs-c)
+target_link_libraries(ecb-slave-c-server ecbs-c sockpp-static)
