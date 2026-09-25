@@ -1,0 +1,11 @@
+CompileFlags:
+  CompilationDatabase: "build"
+  Remove: ["-Werror"]
+  Add: ["-ferror-limit=1000"]
+Index:
+  Background: Build
+  StandardLibrary: true
+Diagnostics:
+  UnusedIncludes: Strict
+Completion:
+  HeaderInsertion: Never

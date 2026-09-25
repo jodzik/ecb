@@ -16,3 +16,21 @@
 [submodule "ecb-slave-c-server/sockpp"]
 	path = ecb-slave-c-server/sockpp
 	url = https://github.com/fpagliughi/sockpp.git
+[submodule "ecb-master-c-client/byteorder-c"]
+	path = ecb-master-c-client/byteorder-c
+	url = git@github.com:jodzik/byteorder-c.git
+[submodule "ecb-master-c-client/safe-c"]
+	path = ecb-master-c-client/safe-c
+	url = git@github.com:jodzik/safe-c.git
+[submodule "ecb-master-c-client/crc-c"]
+	path = ecb-master-c-client/crc-c
+	url = git@github.com:jodzik/crc-c.git
+[submodule "ecb-master-c-client/framer7b-c"]
+	path = ecb-master-c-client/framer7b-c
+	url = git@github.com:jodzik/framer7b-c.git
+[submodule "ecb-master-c-client/sockpp"]
+	path = ecb-master-c-client/sockpp
+	url = https://github.com/fpagliughi/sockpp.git
+[submodule "ecb-master-c-client/ecbm-c"]
+	path = ecb-master-c-client/ecbm-c
+	url = git@github.com:jodzik/ecbm-c.git
