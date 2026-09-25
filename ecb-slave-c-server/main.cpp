@@ -22,11 +22,6 @@ enum {
     // Must be slightly less than the master side timeout, see ../README.md.
     EP_ANSWER_TIMEOUT_MS = 100,
 
-    // Packet Descriptor type field, see ../README.md.
-    PD_TYPE_MASK = 0x0F,
-    PD_TYPE_WRITE = 0x00,
-    PD_TYPE_WRITE_NO_ANSW = 0x01,
-
     // TLV record: [type:u8][length:u8][value].
     TLV_HEADER_SIZE = 2,
     DEVICE_INFO_PAYLOAD_SIZE = TLV_HEADER_SIZE + ECBS_DEVICE_INFO__NAME_SIZE
@@ -131,10 +126,9 @@ static int device_info_read_cb(EcbsDataId const, EcbsRequestToken const token, v
 }
 
 // PICK(65282): connectivity check, answer any WRITE, stay silent for WRITE_NO_ANSW.
-static int pick_write_cb(EcbsDataId const, EcbsRequestToken const token, uint8_t const* const,
-    uint16_t const, void* const) {
-    uint8_t const type = (uint8_t)(token.pd & PD_TYPE_MASK);
-    if (PD_TYPE_WRITE == type) {
+static int pick_write_cb(EcbsDataId const, EcbsRequestToken const token, bool const is_answer_needed,
+    uint8_t const* const, uint16_t const, void* const) {
+    if (is_answer_needed) {
         return ecbs__send_write_answer(&g_ecbs, token);
     }
 
